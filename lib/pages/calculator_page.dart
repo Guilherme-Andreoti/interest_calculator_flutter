@@ -1,3 +1,5 @@
+import 'dart:wasm';
+
 import 'package:custom_radio_grouped_button/CustomButtons/CustomRadioButton.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:intrest_calculator/controllers/controller.dart';
 import 'package:intrest_calculator/helpers/constants.dart';
 import 'package:intrest_calculator/models/result_payment_slip.dart';
+import 'dart:convert'; 
 
 class CalculatorPage extends StatefulWidget {
   @override
@@ -170,6 +173,13 @@ class _CalculatorPageState extends State<CalculatorPage> {
           labelText: label,
           border: _roundedInputDecoration(),
         ),
+
+        validator: (value) {
+          if ( double.parse(value) < 0){
+            return 'O valor precisa ser positivo!';
+          }
+          return null;
+        },   
       ),
     );
   }
