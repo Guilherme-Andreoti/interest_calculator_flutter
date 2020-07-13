@@ -8,7 +8,8 @@ import 'package:intl/intl.dart';
 import 'package:intrest_calculator/controllers/controller.dart';
 import 'package:intrest_calculator/helpers/constants.dart';
 import 'package:intrest_calculator/models/result_payment_slip.dart';
-import 'dart:convert'; 
+import 'package:dynamic_theme/dynamic_theme.dart';
+
 
 class CalculatorPage extends StatefulWidget {
   @override
@@ -27,100 +28,115 @@ class _CalculatorPageState extends State<CalculatorPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: _buildAppBar(),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              _buildTitle('Informações do boleto'),
-              _buildMoneyInputField(
-                'Valor do boleto',
-                controller: _controller.moneyController,
-                onSaved: (value) {
-                  _controller.paymentSlip.money =
-                      _controller.moneyController.numberValue;
-                },
-              ),
-              _buildDateInputField(
-                'Data de vencimento',
-                onSaved: (date) {
-                  _controller.paymentSlip.dueDate = date;
-                },
-              ),
-              _buildDateInputField(
-                'Data de pagamento',
-                onSaved: (date) {
-                  _controller.paymentSlip.payDate = date;
-                },
-              ),
-              _buildTitle('Multa'),
-              _buildMoneyInputField(
-                'Valor da multa',
-                controller: _controller.feeController,
-                onSaved: (value) {
-                  _controller.paymentSlip.feeValue =
-                      _controller.feeController.numberValue;
-                },
-              ),
-              _buildRateRadioButton(
-                context,
-                onChanged: (label) {
-                  print(label);
-                  _controller.paymentSlip.feeType = label;
-                },
-              ),
-              _buildTitle('Juros'),
-              _buildMoneyInputField(
-                'Valor do juros',
-                controller: _controller.interestController,
-                onSaved: (value) {
-                  _controller.paymentSlip.interestValue =
-                      _controller.interestController.numberValue;
-                },
-              ),
-              _buildRateRadioButton(
-                context,
-                onChanged: (label) {
-                  print(label);
-                  _controller.paymentSlip.interestType = label;
-                },
-              ),
-              _buildPeriodRadioButton(
-                context,
-                onChanged: (label) {
-                  print(label);
-                  _controller.paymentSlip.interestPeriod = label;
-                },
-              ),
-              _buildRoundedButton(
-                context,
-                label: 'CALCULAR',
-                padding: EdgeInsets.only(top: 32.0),
-                onTap: () {
-                  if (_formKey.currentState.validate()) {
-                    _formKey.currentState.save();
-                    var result = _controller.calculate();
-                    _showResultDialog(result);
-                  }
-                },
-              ),
-              _buildRoundedButton(
-                context,
-                label: 'LIMPAR',
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                onTap: () {
-                  setState(() {
-                    _controller.clear();
-                  });
-                },
-              )
-            ],
+        
+        child: Container( 
+          decoration: BoxDecoration(
+            gradient: LinearGradient
+            (
+              begin: Alignment.topRight,
+              end: Alignment.bottomLeft,
+              
+              colors: [(Theme.of(context).brightness.toString() == 'Brightness.light' ? Colors.white : Colors.blue ),(Theme.of(context).brightness.toString() == 'Brightness.light' ? Colors.indigoAccent[100] : Colors.indigoAccent[100]) ]
+            )
+          ),
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Form(
+            
+            key: _formKey,
+            child: Column(
+              
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                _buildTitle('Informações do boleto'),
+                _buildMoneyInputField(
+                  'Valor do boleto',
+                  controller: _controller.moneyController,
+                  onSaved: (value) {
+                    _controller.paymentSlip.money =
+                        _controller.moneyController.numberValue;
+                  },
+                ),
+                _buildDateInputField(
+                  'Data de vencimento',
+                  onSaved: (date) {
+                    _controller.paymentSlip.dueDate = date;
+                  },
+                ),
+                _buildDateInputField(
+                  'Data de pagamento',
+                  onSaved: (date) {
+                    _controller.paymentSlip.payDate = date;
+                  },
+                ),
+                _buildTitle('Multa'),
+                _buildMoneyInputField(
+                  'Valor da multa',
+                  controller: _controller.feeController,
+                  onSaved: (value) {
+                    _controller.paymentSlip.feeValue =
+                        _controller.feeController.numberValue;
+                  },
+                ),
+                _buildRateRadioButton(
+                  context,
+                  onChanged: (label) {
+                    print(label);
+                    _controller.paymentSlip.feeType = label;
+                  },
+                ),
+                _buildTitle('Juros'),
+                _buildMoneyInputField(
+                  'Valor do juros',
+                  controller: _controller.interestController,
+                  onSaved: (value) {
+                    _controller.paymentSlip.interestValue =
+                        _controller.interestController.numberValue;
+                  },
+                ),
+                _buildRateRadioButton(
+                  context,
+                  onChanged: (label) {
+                    print(label);
+                    _controller.paymentSlip.interestType = label;
+                  },
+                ),
+                _buildPeriodRadioButton(
+                  context,
+                  onChanged: (label) {
+                    print(label);
+                    _controller.paymentSlip.interestPeriod = label;
+                  },
+                ),
+                _buildRoundedButton(
+                  context,
+                  label: 'CALCULAR',
+                  padding: EdgeInsets.only(top: 32.0),
+                  onTap: () {
+                    if (_formKey.currentState.validate()) {
+                      _formKey.currentState.save();
+                      var result = _controller.calculate();
+                      _showResultDialog(result);
+                    }
+                  },
+                ),
+                _buildRoundedButton(
+                  context,
+                  label: 'LIMPAR',
+                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                  onTap: () {
+                    setState(() {
+                      _controller.clear(_formKey);
+                    });
+                  },
+                )
+              ],
+            ),
           ),
         ),
-      ),
+      )
     );
   }
 
@@ -130,11 +146,24 @@ class _CalculatorPageState extends State<CalculatorPage> {
       actions: <Widget>[
         IconButton(
           icon: Icon(Icons.lightbulb_outline),
-          onPressed: () {},
+          onPressed: () 
+          {
+            DynamicTheme.of(context).setBrightness(Theme.of(context).brightness == Brightness.dark? Brightness.light: Brightness.dark);
+            print(Theme.of(context).brightness.toString());
+          },
         ),
         IconButton(
           icon: Icon(Icons.info),
-          onPressed: () {},
+          onPressed: () {
+            showAboutDialog(
+              context: context, 
+              applicationName: 'Interest Calculator',
+              applicationVersion: '1.0.0',
+              children: <Widget>[
+                  Text('Aplicativo para calculo de juros e multas de boletos', textAlign: TextAlign.left)
+              ]
+            );
+          },
         ),
       ],
     );
@@ -174,12 +203,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
           border: _roundedInputDecoration(),
         ),
 
-        validator: (value) {
-          if ( double.parse(value) < 0){
-            return 'O valor precisa ser positivo!';
-          }
-          return null;
-        },   
+        // validator: (value) {
+        //   if ( double.parse(value) < 0){
+        //     return 'O valor precisa ser positivo!';
+        //   }
+        //   return null;
+        // },   
       ),
     );
   }
