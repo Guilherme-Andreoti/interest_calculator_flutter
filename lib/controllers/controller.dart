@@ -73,17 +73,16 @@ class Controller {
   }
 
   // Função para apagar (reiniciar) as informações da tela
-  void clear(_formKey) {
-    // paymentSlip.money = 0.0; 
-    // paymentSlip.dueDate = new DateTime.now(); 
-    // paymentSlip.payDate = new DateTime.now(); 
-    // paymentSlip.feeValue = 0.0;
-    // paymentSlip.feeType = null; 
-    // paymentSlip.interestValue = 0;  
-    // paymentSlip.interestPeriod= '0'; 
-    // paymentSlip.interestType= null;  
-    _formKey.currentState.reset();
-
+  void clear() {
+    moneyController.text = '0,00'; 
+    feeController.text = '0,00'; 
+    interestController.text = '0,00'; 
+    paymentSlip.dueDate = new DateTime.now(); 
+    paymentSlip.payDate = new DateTime.now(); 
+    paymentSlip.money = 0.0;
+    paymentSlip.feeType = Constants.rateLabels[0];   
+    paymentSlip.interestType = Constants.rateLabels[0]; 
+    paymentSlip.interestPeriod = Constants.periodLabels[0];  
 
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:wasm';
-
 import 'package:custom_radio_grouped_button/CustomButtons/CustomRadioButton.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +126,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   padding: EdgeInsets.symmetric(vertical: 8.0),
                   onTap: () {
                     setState(() {
-                      _controller.clear(_formKey);
+                      _controller.clear();
                     });
                   },
                 )
